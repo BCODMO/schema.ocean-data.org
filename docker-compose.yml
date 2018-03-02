@@ -1,0 +1,5 @@
+schemaodo:
+  container_name: bcodmo_schema_odo
+  image: bcodmo/schemaodo:latest
+  ports:
+   - "9900:9900"
