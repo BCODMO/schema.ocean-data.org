@@ -545,24 +545,25 @@ function tabulateRange(obj) {
 
 function getFlatDomainList(domain) {
   var rv=[];
-  if (domain["@id"] !== undefined) {
-    if  (domain["@id"].substring(0,2) == "_:" ) {
-      var blanknode = domain["@id"];
-      var struc = getNode(blanknode)[blanknode]["owl:unionOf"]["@list"];
-      $.each(struc, function( index, value ) {
-      rv.push(value["@id"]);
+  if (undefined != domain) {
+    if (domain["@id"] !== undefined) {
+      if  (domain["@id"].substring(0,2) == "_:" ) {
+        var blanknode = domain["@id"];
+        var struc = getNode(blanknode)[blanknode]["owl:unionOf"]["@list"];
+        $.each(struc, function( index, value ) {
+        rv.push(value["@id"]);
+        });
+      } else {
+        rv.push(domain["@id"]);
+      }
+    }
+
+    if (domain["owl:unionOf"] !== undefined) {
+      $.each(domain["owl:unionOf"]["@list"], function( index, value ) {
+        rv.push(value["@id"]);
       });
-    } else {
-      rv.push(domain["@id"]);
     }
   }
-
-  if (domain["owl:unionOf"] !== undefined) {
-    $.each(domain["owl:unionOf"]["@list"], function( index, value ) {
-      rv.push(value["@id"]);
-    });
-  }
-
   return JSON.stringify(rv.sort());
 }
 
