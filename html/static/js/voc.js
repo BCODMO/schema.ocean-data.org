@@ -977,6 +977,7 @@ function updatestate2(val) {
     $('#breadcrumbTrail').show();
     $("#termName").html(val);
     var term=voc_prefix+val;
+    //console.log(term);
     var node=getSingleNode(term);
     var type=determineType(term);
     if (node !== null) {

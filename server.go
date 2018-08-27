@@ -16,29 +16,9 @@ type MyServer struct {
 func main() {
 
   htmlRouter := mux.NewRouter().StrictSlash(true)
-  /*
-  htmlRouter.HandleFunc("/documentation", func(w http.ResponseWriter, r *http.Request) {
-    http.ServeFile(w, r, "./html/documentation.html")
-  })
-  htmlRouter.HandleFunc("/examples", func(w http.ResponseWriter, r *http.Request) {
-    http.ServeFile(w, r, "./html/examples.html")
-  })
-  htmlRouter.HandleFunc("/examples/repository/minimal", func(w http.ResponseWriter, r *http.Request) {
-    http.ServeFile(w, r, "./html/static/schema/examples/repository/minimal.jsonld")
-  })
-  htmlRouter.HandleFunc("/examples/repository/full", func(w http.ResponseWriter, r *http.Request) {
-    http.ServeFile(w, r, "./html/static/schema/examples/repository/full.jsonld")
-  })
-  htmlRouter.HandleFunc("/examples/dataset/minimal", func(w http.ResponseWriter, r *http.Request) {
-    http.ServeFile(w, r, "./html/static/schema/examples/resource/dataset-minimal.jsonld")
-  })
-  htmlRouter.HandleFunc("/examples/dataset/full", func(w http.ResponseWriter, r *http.Request) {
-    http.ServeFile(w, r, "./html/static/schema/examples/resource/dataset-full.jsonld")
-  })
-  */
-  // htmlRouter.HandleFunc("/schema", Conneg)
+
   htmlRouter.HandleFunc("/schema/", Conneg)
-  htmlRouter.HandleFunc("/schema/rdf.{ext}", Conneg)
+  htmlRouter.HandleFunc("/rdf/odo.{ext}", Conneg)
   htmlRouter.PathPrefix("/static").Handler(http.StripPrefix("/static", http.FileServer(http.Dir("./html/static"))))
   htmlRouter.Handle("/", http.RedirectHandler("/schema/", http.StatusMovedPermanently))
   htmlRouter.HandleFunc("/schema/{resource}", func(w http.ResponseWriter, r *http.Request) {
@@ -91,7 +71,8 @@ func Conneg(w http.ResponseWriter, r *http.Request) {
       break
 
     case "ttl":
-      http.ServeFile(w, r, "./html/static/schema/odo.ttl")
+    case "n3":
+      http.ServeFile(w, r, "./html/static/schema/odo.n3")
       break
 
     case "nt":
@@ -124,7 +105,7 @@ func Conneg(w http.ResponseWriter, r *http.Request) {
           break
 
         case CaseInsensitiveContains(accept, "application/rdf+turtle"):
-          http.ServeFile(w, r, "./html/static/schema/odo.ttl")
+          http.ServeFile(w, r, "./html/static/schema/odo.n3")
           break
 
         case CaseInsensitiveContains(accept, "application/rdf+n3"):
