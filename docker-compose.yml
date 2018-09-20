@@ -1,8 +1,0 @@
-schemaodo:
-  container_name: bcodmo_schema_odo
-  image: bcodmo/schemaodo:latest
-  restart: unless-stopped
-  volumes:
-    - ./html:/html
-  ports:
-   - "9900:9900"

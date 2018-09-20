@@ -1,3 +1,3 @@
 [submodule "html/static/schema"]
-	path = html/static/schema
+	path = html/schema/static/schema
 	url = https://github.com/BCODMO/Ocean-Data-Ontology
